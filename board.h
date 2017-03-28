@@ -32,6 +32,7 @@ private:
         vector< vector<bool>> c_cols;
         vector< vector<bool>> c_sqrs;
         int boardSize, sqSize;
+        //matrix< vector<int>> tally;
 
 };
 

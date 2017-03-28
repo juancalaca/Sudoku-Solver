@@ -4,6 +4,7 @@ board::board(int sqSz) : sqSize(sqSz)
 {
         boardSize = sqSize * sqSize;
         value.resize(boardSize + 1, boardSize + 1);
+        //tally.resize(boardSize + 1, boardSize + 1);
 }
 
 void board::clear()
@@ -33,6 +34,8 @@ void board::initialize(ifstream &fin)
                                 setCell(i, j, ch - '0');
                 }
         }
+        
+        setConflicts();
 }
 
 void board::print() const
@@ -213,6 +216,7 @@ void board::place(int i, int j, int val)
         c_rows[i][val] = true;
         c_cols[j][val] = true;
         c_sqrs[sqrNum][val] = true;
+        //tally[i][j].push_back(val);
 }
 
 void board::remove(int i, int j)
@@ -227,5 +231,4 @@ void board::remove(int i, int j)
         c_cols[j][val] = false;
         c_sqrs[sqrNum][val] = false;
 
-        
 }
