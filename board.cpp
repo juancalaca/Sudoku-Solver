@@ -4,7 +4,16 @@ board::board(int sqSz) : sqSize(sqSz)
 {
         boardSize = sqSize * sqSize;
         value.resize(boardSize + 1, boardSize + 1);
-        //tally.resize(boardSize + 1, boardSize + 1);
+        c_rows.resize(boardSize + 1);
+        c_cols.resize(boardSize + 1);
+        c_sqrs.resize(boardSize + 1);
+        
+        for (int i = 1; i <= boardSize; i++)
+        {
+                c_rows[i].resize(boardSize + 1);
+                c_cols[i].resize(boardSize + 1);
+                c_sqrs[i].resize(boardSize + 1);
+        }
 }
 
 void board::clear()
@@ -16,6 +25,16 @@ void board::clear()
                         value[i][j] = -1;
                 }
         }
+
+	for (int i = 1; i <= boardSize; i++)
+	{
+		for (int j = 1; j <= boardSize; j++)
+		{
+			c_rows[i][j] = false;
+			c_cols[i][j] = false;
+			c_sqrs[i][j] = false;
+		}
+	}
 }
 
 void board::initialize(ifstream &fin)
@@ -35,7 +54,6 @@ void board::initialize(ifstream &fin)
                 }
         }
         
-        setConflicts();
 }
 
 void board::print() const
@@ -93,63 +111,20 @@ void board::setCell(int i, int j, int val)
                 value[i][j] = val;
         else
                 throw rangeError("bad value in setCell");
-}
-
-void board::setConflicts()
-{
-        c_rows.resize(boardSize + 1);
-        c_cols.resize(boardSize + 1);
-        c_sqrs.resize(boardSize + 1);
-
-        for (int i = 1; i <= boardSize; i++)
-        {
-                c_rows[i].resize(boardSize + 1);
-                c_cols[i].resize(boardSize + 1);
-                c_sqrs[i].resize(boardSize + 1);
-        }
-
-        for (int i = 1; i <= boardSize; i++)
-        {
-                for (int j = 1; j <= boardSize; j++)
-                {
-                        int val = value[i][j];
-                        if (val != -1)
-                                c_rows[i][val] = true;
-                }
-        }
         
-        for (int i = 1; i <= boardSize; i++)
-        {
-                for (int j = 1; j <= boardSize; j++)
-                {
-                        int val = value[j][i];
-                        if (val != -1)
-                                c_cols[i][val] = true;
-                }
-        }
-        
-        for (int i = 1; i <= boardSize; i++)
-        {
-                for (int j = 1; j <= boardSize; j++)
-                {
-                        int val = value[i][j];
-                        int sqNum = squareNumber(i,j);
-                        if (val != -1)
-                        {
-                                c_sqrs[sqNum][val] = true;
-                        }
-                }
-        }
+        int sqrNum = squareNumber(i, j);
+        c_rows[i][val] = true;
+        c_cols[j][val] = true;
+        c_sqrs[sqrNum][val] = true;
 }
 
 void board::printConflicts() const
 {
-        cout << boolalpha;
+        //cout << boolalpha;
         cout << "Column Conflicts" << endl;
         for (int i = 1; i <= boardSize; i++)
         {
                 cout << "Column " << i << ": ";
-                
                 for (int j = 1; j <= boardSize; j++)
                 {
                       cout << c_cols[i][j] << " ";
@@ -161,7 +136,6 @@ void board::printConflicts() const
         for (int i = 1; i <= boardSize; i++)
         {
                 cout << "Row " << i << ": ";
-                
                 for (int j = 1; j <= boardSize; j++)
                 {
                         cout << c_rows[i][j] << " ";
@@ -205,7 +179,7 @@ bool board::isSolved() const
         return true;
 }
 
-void board::place(int i, int j, int val)
+/*void board::place(int i, int j, int val)
 {
         if (i >= 1 && i <= boardSize && j >= 1 && j <= boardSize)
                 value[i][j] = val;
@@ -216,16 +190,17 @@ void board::place(int i, int j, int val)
         c_rows[i][val] = true;
         c_cols[j][val] = true;
         c_sqrs[sqrNum][val] = true;
-        //tally[i][j].push_back(val);
-}
+}*/
 
-void board::remove(int i, int j)
+void board::resetCell(int i, int j)
 {
         int val = value[i][j];
+        
         if (i >= 1 && i <= boardSize && j >= 1 && j <= boardSize)
                 value[i][j] = -1;
         else
                 throw rangeError("bad value in remove");
+        
         int sqrNum = squareNumber(i, j);
         c_rows[i][val] = false;
         c_cols[j][val] = false;
