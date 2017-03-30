@@ -47,7 +47,6 @@ class board
                 void printConflicts() const;
                 int squareNumber(int i, int j);
                 bool isSolved() const;
-                //void place(int i, int j, int val);
                 void resetCell(int i, int j);
         
         private:

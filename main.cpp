@@ -29,8 +29,9 @@ int main()
         {
                 b1.initialize(fin);
                 b1.print();
+                cout << endl;
                 b1.printConflicts();
-                cout << "Is the board solved? " << boolalpha << b1.isSolved() << endl;
+                cout << endl << "Is the board solved? " << boolalpha << b1.isSolved() << endl << endl;
         }
         
         fin.close();

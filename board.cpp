@@ -120,7 +120,7 @@ void board::setCell(int i, int j, int val)
 
 void board::printConflicts() const
 {
-        //cout << boolalpha;
+        cout << noboolalpha;
         cout << "Column Conflicts" << endl;
         for (int i = 1; i <= boardSize; i++)
         {
