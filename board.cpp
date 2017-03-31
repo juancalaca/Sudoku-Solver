@@ -35,7 +35,9 @@ board::board(int sqSz) : sqSize(sqSz)
         }
 }
 
+
 void board::clear()
+//clears the board, sets all values to blank (-1)
 {
         for (int i = 1; i <= boardSize; i++)
         {
@@ -48,6 +50,7 @@ void board::clear()
 	for (int i = 1; i <= boardSize; i++)
 	{
 		for (int j = 1; j <= boardSize; j++)
+		//initializes all of the conflicts to false to avoid mistakes when looping
 		{
 			c_rows[i][j] = false;
 			c_cols[i][j] = false;
@@ -57,6 +60,8 @@ void board::clear()
 }
 
 void board::initialize(ifstream &fin)
+//initializes the board, creates the board by setting '.' to blank cells
+//and non '.' characters to the number provided
 {
         char ch;
         
@@ -70,6 +75,7 @@ void board::initialize(ifstream &fin)
                         
                         if (ch != '.')
                                 setCell(i, j, ch - '0');
+                                //turns the character to an int
                 }
         }
         
@@ -109,6 +115,8 @@ void board::print() const
 }
 
 bool board::isBlank(int i, int j) const
+//checks if the current board is blank, that is there are no values in any
+//of the cells
 {
         if (i < 1 || i > boardSize || j < 1 || j > boardSize)
                 throw rangeError("bad value in isBlank");
@@ -117,6 +125,7 @@ bool board::isBlank(int i, int j) const
 }
 
 int board::getCell(int i, int j) const
+//gets the value from a specific cell, or throws an error if the cell does not exist
 {
         if (i >= 1 && i <= boardSize && j >= 1 && j <= boardSize)
                 return value[i][j];
@@ -125,6 +134,7 @@ int board::getCell(int i, int j) const
 }
 
 void board::setCell(int i, int j, int val)
+//sets a cell to a given value and updates the conflicts accordingly
 {
         if (i >= 1 && i <= boardSize && j >= 1 && j <= boardSize)
                 value[i][j] = val;
@@ -138,6 +148,7 @@ void board::setCell(int i, int j, int val)
 }
 
 void board::printConflicts() const
+//prints the matrices of all of the conflicts for the rows, columns and squares
 {
         cout << noboolalpha;
         cout << "Column Conflicts" << endl;
@@ -189,6 +200,8 @@ int board::squareNumber(int i, int j)
 }
 
 bool board::isSolved() const
+//checks if the board is solved, (opposite of isBlank()) by seeing if there is a 
+//value placed in every cell
 {
         for (int i = 1; i <= boardSize; i++)
         {
@@ -202,6 +215,8 @@ bool board::isSolved() const
 }
 
 void board::resetCell(int i, int j)
+//resets a cell or throws an error if trying to access invalid cell
+//updates the conflicts accordingly
 {
         int val = value[i][j];
         

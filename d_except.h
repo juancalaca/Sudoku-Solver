@@ -1,3 +1,6 @@
+// seprod4a
+// File: d_except header file provided
+
 #ifndef EXCEPTION_CLASSES
 #define EXCEPTION_CLASSES
 
