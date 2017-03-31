@@ -1,13 +1,32 @@
-#include "board.h"
+// Project 4a
+// seprod4a
+//
+// File: board.cpp
+// This file contains the declaration of class board's
+// member functions.
 
+#include "board.h" // include function prototypes
+
+// constructor initializes data members to appropriate size
+// given value of parameter sqSz
 board::board(int sqSz) : sqSize(sqSz)
 {
+        // board size is the square of sqSizw
         boardSize = sqSize * sqSize;
+        
+        // matrix goes from 1 to boardSize
+        // start indexing at 1
         value.resize(boardSize + 1, boardSize + 1);
+        
+        // resize vector to fit all rows/cols/sqrs
+        // start indexing at 1
         c_rows.resize(boardSize + 1);
         c_cols.resize(boardSize + 1);
         c_sqrs.resize(boardSize + 1);
         
+        // resize all boolean vectors to fit s values
+        // given by the size of the board
+        // start indexing at 1
         for (int i = 1; i <= boardSize; i++)
         {
                 c_rows[i].resize(boardSize + 1);
@@ -160,9 +179,12 @@ int board::squareNumber(int i, int j)
 // Return the square number of cell i,j (counting from left to right,
 // top to bottom.  Note that i and j each go from 1 to BoardSize
 {
+        // Checks if cell within range of matrix value
+        if (i < 1 || i > boardSize || j < 1 || j > boardSize)
+                throw rangeError("bad value in squareNumber");
+        
         // Note that (int) i/SquareSize and (int) j/SquareSize are the x-y
         // coordinates of the square that i,j is in.
-        
         return sqSize * ((i-1)/sqSize) + (j-1)/sqSize + 1;
 }
 
@@ -179,19 +201,6 @@ bool board::isSolved() const
         return true;
 }
 
-/*void board::place(int i, int j, int val)
-{
-        if (i >= 1 && i <= boardSize && j >= 1 && j <= boardSize)
-                value[i][j] = val;
-        else
-                throw rangeError("bad value in place");
-
-        int sqrNum = squareNumber(i, j);
-        c_rows[i][val] = true;
-        c_cols[j][val] = true;
-        c_sqrs[sqrNum][val] = true;
-}*/
-
 void board::resetCell(int i, int j)
 {
         int val = value[i][j];
@@ -199,7 +208,7 @@ void board::resetCell(int i, int j)
         if (i >= 1 && i <= boardSize && j >= 1 && j <= boardSize)
                 value[i][j] = -1;
         else
-                throw rangeError("bad value in remove");
+                throw rangeError("bad value in resetCell");
         
         int sqrNum = squareNumber(i, j);
         c_rows[i][val] = false;
