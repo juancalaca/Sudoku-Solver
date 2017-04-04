@@ -41,6 +41,7 @@ int main()
         //read in the file and continuously check the next value to make sure it is not 'Z'
         //if the next character is a 'Z' then all of the boards have been solved
         {
+		recursiveCalls = 0;
                 b1.initialize(fin);
                 //initializes the board
                 b1.print();
