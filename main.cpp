@@ -41,17 +41,23 @@ int main()
         //read in the file and continuously check the next value to make sure it is not 'Z'
         //if the next character is a 'Z' then all of the boards have been solved
         {
-		recursiveCalls = 0;
+				recursiveCalls = 0;
+				//reset the recursive calls for each board
                 b1.initialize(fin);
                 //initializes the board
                 b1.print();
+                //print the solved board
                 b1.solve(recursiveCalls);
+                //solve the board
                 cout << "Recursive Calls for this board: " << recursiveCalls << endl;
                 totalRecCalls += recursiveCalls;
+                //counter for the total number of recursive calls
                 numBoards++;
+                //create a counter to help find the total number for the average
         }
         
         long long int averageRecCalls = totalRecCalls / numBoards;
+        //calculate the average number of recursive calls
         cout << "Average Recursive Calls: " << averageRecCalls << endl;
         fin.close();
         
