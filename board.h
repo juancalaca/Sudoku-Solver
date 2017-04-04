@@ -22,6 +22,8 @@
 #include "d_except.h"
 #include <fstream>
 
+using namespace std;
+
 class board
 {
         
@@ -61,6 +63,16 @@ class board
                 void resetCell(int i, int j);
                 // sets value of cell (i,j) to blank
                 // updates conflicts for blank cell (i,j)
+        
+                void findFirstBlankCell(int& i, int& j);
+        
+                bool isLegal(int i, int j, int s);
+        
+                void solve(long long int& recursiveCalls);
+        
+                void findMostConstrainedCell(int& i, int& j);
+        
+                static bool isTrue(bool i) {return i == true;};
         
         private:
                 matrix<int> value;

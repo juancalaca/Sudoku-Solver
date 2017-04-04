@@ -15,11 +15,9 @@
 
 using namespace std;
 
-
-
 int main()
 {		
-		//initialize board b1 to have square size 3 (9x9 cells)
+        //initialize board b1 to have square size 3 (9x9 cells)
         board b1(3);
         ifstream fin;
         
@@ -36,20 +34,24 @@ int main()
                         cout << "Error: file couldn't be opened: try again" << endl;
         }
 
+        long long int recursiveCalls = 0;
+        long long int totalRecCalls = 0;
+        int numBoards = 0;
         while (fin && fin.peek() != 'Z')
         //read in the file and continuously check the next value to make sure it is not 'Z'
         //if the next character is a 'Z' then all of the boards have been solved
-		{
+        {
                 b1.initialize(fin);
                 //initializes the board
                 b1.print();
-                //prints the board
-                cout << endl;
-                b1.printConflicts();
-                //prints the conflicts
-                cout << endl << "Is the board solved? " << boolalpha << b1.isSolved() << endl << endl;
-                //prints whether or not the board has been solved
+                b1.solve(recursiveCalls);
+                cout << "Recursive Calls for this board: " << recursiveCalls << endl;
+                totalRecCalls += recursiveCalls;
+                numBoards++;
         }
         
+        long long int averageRecCalls = totalRecCalls / numBoards;
+        cout << "Average Recursive Calls: " << averageRecCalls << endl;
         fin.close();
+        
 }

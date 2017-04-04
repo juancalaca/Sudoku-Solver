@@ -231,3 +231,102 @@ void board::resetCell(int i, int j)
         c_sqrs[sqrNum][val] = false;
 
 }
+
+void board::findFirstBlankCell(int& i, int& j)
+{
+        int val;
+        for (int r = 1; r <= boardSize; r++)
+        {
+                for (int c = 1; c <= boardSize; c++)
+                {
+                        val = value[r][c];
+                        
+                        if (val == -1)
+                        {
+                                i = r;
+                                j = c;
+                                break;
+                        }
+                }
+                
+                if (val == -1) break;
+        }
+                
+}
+
+bool board::isLegal(int i, int j, int s)
+{
+        int sqrNum = squareNumber(i, j);
+        
+        bool row = c_rows[i][s];
+        bool col = c_cols[j][s];
+        bool sqr = c_sqrs[sqrNum][s];
+        
+        return (!(row || col || sqr));
+        
+}
+
+void board::solve(long long int& recursiveCalls)
+{
+        recursiveCalls++;
+        
+        if (isSolved())
+        {
+                print();
+                return;
+        }
+        else
+        {       int i, j;
+                findMostConstrainedCell(i, j);
+                for (int s = 1; s <= boardSize; s++)
+                {
+                        if (isLegal(i,j,s))
+                        {
+                                setCell(i, j, s);
+                                solve(recursiveCalls);
+                                if (!isSolved())
+                                {
+                                        resetCell(i, j);
+                                }
+                        }
+                }
+        }
+}
+
+void board::findMostConstrainedCell(int& i, int& j)
+{
+        int maximum = 0;
+        int sqrNum;
+        int count_row, count_col, count_sqr;
+        int curr_max;
+        int val;
+        
+        for (int r = 1; r <= boardSize; r++)
+        {
+                for (int c = 1; c <= boardSize; c++)
+                {
+                        val = value[r][c];
+                        
+                        if (val == -1)
+                        {
+                                sqrNum = squareNumber(r, c);
+                        
+                                for (int s = 1; s <= boardSize; s++)
+                                {
+                                        count_row = count_if(c_rows[r].begin(), c_rows[r].end(), isTrue);
+                                        count_col = count_if(c_cols[c].begin(), c_cols[c].end(), isTrue);
+                                        count_sqr = count_if(c_sqrs[sqrNum].begin(), c_sqrs[sqrNum].end(), isTrue);
+                                
+                                        curr_max = count_row + count_col + count_sqr;
+                                
+                                        if (curr_max > maximum)
+                                        {
+                                                i = r;
+                                                j = c;
+                                                maximum = curr_max;
+                                        }
+                                }
+                        }
+                }
+        }
+}
