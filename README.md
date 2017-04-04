@@ -1,4 +1,4 @@
-#seprod4a
+##seprod4a
 
 This program solves Sudoku puzzles. The input to Sudoku is a 9x9 board that is subdivided
 into 3x3 squares. Each cell is either blank or contains an integer from 1 to 9.
