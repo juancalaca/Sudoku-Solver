@@ -1,5 +1,5 @@
-// Project 4a
-// seprod4a
+// Project 4b
+// seprod4b
 //
 // File: board.cpp
 // This file contains the declaration of class board's
@@ -233,6 +233,7 @@ void board::resetCell(int i, int j)
 }
 
 void board::findFirstBlankCell(int& i, int& j)
+//find the first blank cell in the board
 {
         int val;
         for (int r = 1; r <= boardSize; r++)
@@ -255,6 +256,7 @@ void board::findFirstBlankCell(int& i, int& j)
 }
 
 bool board::isLegal(int i, int j, int s)
+//if the cell is a legal square to place a number in 
 {
         int sqrNum = squareNumber(i, j);
         
@@ -267,17 +269,22 @@ bool board::isLegal(int i, int j, int s)
 }
 
 void board::solve(long long int& recursiveCalls)
+//solves the board
 {
         recursiveCalls++;
+        //counter to count the number of times solve() is called
         
         if (isSolved())
+        //base case for recursion
         {
                 print();
+                //print the solved board
                 return;
         }
         else
         {       int i, j;
                 findMostConstrainedCell(i, j);
+                //find the best candidate for a cell to place a value
                 for (int s = 1; s <= boardSize; s++)
                 {
                         if (isLegal(i,j,s))
@@ -285,6 +292,7 @@ void board::solve(long long int& recursiveCalls)
                                 setCell(i, j, s);
                                 solve(recursiveCalls);
                                 if (!isSolved())
+                                //keeps from printing out multiple boards
                                 {
                                         resetCell(i, j);
                                 }
@@ -294,6 +302,7 @@ void board::solve(long long int& recursiveCalls)
 }
 
 void board::findMostConstrainedCell(int& i, int& j)
+//more efficient function to find the best cell to place a value
 {
         int maximum = 0;
         int sqrNum;
@@ -316,10 +325,13 @@ void board::findMostConstrainedCell(int& i, int& j)
                                         count_row = count_if(c_rows[r].begin(), c_rows[r].end(), isTrue);
                                         count_col = count_if(c_cols[c].begin(), c_cols[c].end(), isTrue);
                                         count_sqr = count_if(c_sqrs[sqrNum].begin(), c_sqrs[sqrNum].end(), isTrue);
-                                
+                                		//coutns the number of constraints for the cell
+                                		
                                         curr_max = count_row + count_col + count_sqr;
+                                        //adds up all of the constraints to find the best cell
                                 
                                         if (curr_max > maximum)
+                                        //compares every cell to find the cell with the most constraints
                                         {
                                                 i = r;
                                                 j = c;

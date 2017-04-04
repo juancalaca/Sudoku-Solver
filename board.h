@@ -1,5 +1,5 @@
-// Project 4a
-// seprod4a
+// Project 4b
+// seprod4b
 //
 // File: board.h
 // This file contains the board class declaration with all its member
@@ -65,14 +65,19 @@ class board
                 // updates conflicts for blank cell (i,j)
         
                 void findFirstBlankCell(int& i, int& j);
+                //finds the first blank cell in the board
         
                 bool isLegal(int i, int j, int s);
+                //returns if the number can be placed in the cell
         
                 void solve(long long int& recursiveCalls);
+                //solves the board recursively with backtracking
         
                 void findMostConstrainedCell(int& i, int& j);
+                //more efficient version of finding a cell to place a number in
         
                 static bool isTrue(bool i) {return i == true;};
+                //function to help count the number of booleans in the vector
         
         private:
                 matrix<int> value;

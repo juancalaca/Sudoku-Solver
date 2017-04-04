@@ -1,4 +1,4 @@
-// seprod4a
+// seprod4b
 // File: d_matrix header file provided
 
 #ifndef MATRIX_CLASS
