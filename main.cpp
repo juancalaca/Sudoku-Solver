@@ -61,6 +61,7 @@ int main()
         
         long long int averageRecCalls = totalRecCalls / numBoards;
         //calculate the average number of recursive calls
+        cout << "Total Number of Recursive calls: " << totalRecCalls << endl;
         cout << "Average Recursive Calls: " << averageRecCalls << endl;
         fin.close(); //close file
         
