@@ -11,6 +11,11 @@
 // rows, columns, and squares of the board. The boolean vector at index i
 // represents the state of row/column/square i, where the index s of the
 // boolean vector represents if the value s is in that row/column/square i.
+// This class solves the sudoku board using function solve() where it solves
+// the board recursively, as well as using backtracking. Together with the conflict
+// matrices for the board, and the function findMostConstrainedCell() the
+// number of recursive calls is optimized.
+
 
 #ifndef BOARD_CLASS
 #define BOARD_CLASS
@@ -74,10 +79,10 @@ class board
                 //solves the board recursively with backtracking
         
                 void findMostConstrainedCell(int& i, int& j);
-                //more efficient version of finding a cell to place a number in
+                //finds blank cell with most constrains relative to other blank cells
         
                 static bool isTrue(bool i) {return i == true;};
-                //function to help count the number of booleans in the vector
+                //function to help count the number of booleans 'true's in the vector
         
         private:
                 matrix<int> value;

@@ -256,15 +256,15 @@ void board::findFirstBlankCell(int& i, int& j)
 }
 
 bool board::isLegal(int i, int j, int s)
-//if the cell is a legal square to place a number in 
+//if cell (i,j) is a legal square to place value s in
 {
         int sqrNum = squareNumber(i, j);
         
-        bool row = c_rows[i][s];
-        bool col = c_cols[j][s];
-        bool sqr = c_sqrs[sqrNum][s];
+        bool row = c_rows[i][s]; // row conflict
+        bool col = c_cols[j][s]; // column conflict
+        bool sqr = c_sqrs[sqrNum][s]; // square conflict
         
-        return (!(row || col || sqr));
+        return (!(row || col || sqr)); // all set to false for true
         
 }
 
@@ -272,29 +272,29 @@ void board::solve(long long int& recursiveCalls)
 //solves the board
 {
         recursiveCalls++;
-        //counter to count the number of times solve() is called
+        //increase counter to count the number of times solve() is called
         
         if (isSolved())
-        //base case for recursion
+        //base case for recursion board is solved
         {
                 print();
                 //print the solved board
                 return;
         }
         else
-        {       int i, j;
+        {       int i, j; // distinct variables for each call
                 findMostConstrainedCell(i, j);
                 //find the best candidate for a cell to place a value
                 for (int s = 1; s <= boardSize; s++)
                 {
                         if (isLegal(i,j,s))
                         {
-                                setCell(i, j, s);
-                                solve(recursiveCalls);
+                                setCell(i, j, s); // place value in cell
+                                solve(recursiveCalls); // start recursive path
                                 if (!isSolved())
                                 //keeps from printing out multiple boards
                                 {
-                                        resetCell(i, j);
+                                        resetCell(i, j); // backtrack
                                 }
                         }
                 }
@@ -303,7 +303,9 @@ void board::solve(long long int& recursiveCalls)
 
 void board::findMostConstrainedCell(int& i, int& j)
 //more efficient function to find the best cell to place a value
+//finds cell that has most 'true' in row, col, sqr conflict vectors
 {
+        // initialize variables to keep track of most constrained cell
         int maximum = 0;
         int sqrNum;
         int count_row, count_col, count_sqr;
@@ -316,7 +318,7 @@ void board::findMostConstrainedCell(int& i, int& j)
                 {
                         val = value[r][c];
                         
-                        if (val == -1)
+                        if (val == -1) // cell is blank
                         {
                                 sqrNum = squareNumber(r, c);
                         
@@ -325,17 +327,19 @@ void board::findMostConstrainedCell(int& i, int& j)
                                         count_row = count_if(c_rows[r].begin(), c_rows[r].end(), isTrue);
                                         count_col = count_if(c_cols[c].begin(), c_cols[c].end(), isTrue);
                                         count_sqr = count_if(c_sqrs[sqrNum].begin(), c_sqrs[sqrNum].end(), isTrue);
-                                		//coutns the number of constraints for the cell
+                                        //counts the number of constraints for the cell
+                                        //counts the number of entries that match 'true'
                                 		
                                         curr_max = count_row + count_col + count_sqr;
                                         //adds up all of the constraints to find the best cell
                                 
                                         if (curr_max > maximum)
-                                        //compares every cell to find the cell with the most constraints
+                                        //compares every blank cell to find the cell with the most constraints
+                                        //greatest number of 'true' entries in its matrices
                                         {
                                                 i = r;
                                                 j = c;
-                                                maximum = curr_max;
+                                                maximum = curr_max; //set as new max
                                         }
                                 }
                         }

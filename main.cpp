@@ -1,11 +1,11 @@
-//Project 4a
-//seprod4a
+// Project 4b
+// seprod4b
 //
-//File: Main file
-//the main file handles the process of "playing" the sudoko game
-//it starts by reading in a file and continously solving the puzzle
-//using the board class. Once there are no more puzzles to be solved
-//the program exits.
+// File: Main file
+// The main file handles the process of "playing" the sudoku game.
+// It starts by reading in a file and continously solving the puzzle
+// using the board class. Once there are no more puzzles to be solved
+// the program exits.
 
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main()
         
         while (true)
         {
-        		//loop for entering the name of the file to read from
+                //loop for entering the name of the file to read from
                 string fileName;
                 cout << "Please enter full path for Sudoku Board file:" << endl;
                 cin >> fileName;
@@ -34,15 +34,17 @@ int main()
                         cout << "Error: file couldn't be opened: try again" << endl;
         }
 
+        // initialize variables that track number of recursive calls
         long long int recursiveCalls = 0;
         long long int totalRecCalls = 0;
         int numBoards = 0;
+        
         while (fin && fin.peek() != 'Z')
         //read in the file and continuously check the next value to make sure it is not 'Z'
         //if the next character is a 'Z' then all of the boards have been solved
         {
-				recursiveCalls = 0;
-				//reset the recursive calls for each board
+                recursiveCalls = 0;
+                //reset the recursive calls for each board
                 b1.initialize(fin);
                 //initializes the board
                 b1.print();
@@ -50,6 +52,7 @@ int main()
                 b1.solve(recursiveCalls);
                 //solve the board
                 cout << "Recursive Calls for this board: " << recursiveCalls << endl;
+                //print out total number of recursive calls for solving current board
                 totalRecCalls += recursiveCalls;
                 //counter for the total number of recursive calls
                 numBoards++;
@@ -59,6 +62,6 @@ int main()
         long long int averageRecCalls = totalRecCalls / numBoards;
         //calculate the average number of recursive calls
         cout << "Average Recursive Calls: " << averageRecCalls << endl;
-        fin.close();
+        fin.close(); //close file
         
 }
