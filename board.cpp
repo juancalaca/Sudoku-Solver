@@ -329,7 +329,8 @@ void board::findMostConstrainedCell(int& i, int& j)
                                         count_sqr = count_if(c_sqrs[sqrNum].begin(), c_sqrs[sqrNum].end(), isTrue);
                                         //counts the number of constraints for the cell
                                         //counts the number of entries that match 'true'
-                                		
+                                	//uses static function as iterator
+                                        
                                         curr_max = count_row + count_col + count_sqr;
                                         //adds up all of the constraints to find the best cell
                                 

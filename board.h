@@ -82,7 +82,7 @@ class board
                 //finds blank cell with most constrains relative to other blank cells
         
                 static bool isTrue(bool i) {return i == true;};
-                //function to help count the number of booleans 'true's in the vector
+                //static function to help count the number of booleans 'true's in the vector
         
         private:
                 matrix<int> value;
